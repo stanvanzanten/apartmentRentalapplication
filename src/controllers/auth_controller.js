@@ -31,7 +31,7 @@ module.exports = {
                 console.log('body pass: ' + req.body.Password + ' || user pass: ' + result[0].Password)
                 if (passwordisValid) {
 
-                    var token = jwt.sign({ id: result.userid }, config.secretkey, {
+                    var token = jwt.sign({user}, config.secretkey, {
                         expiresIn: 86400
                     })
                     res.send('Logged in', { auth: true, token: token }, (200))
@@ -58,7 +58,7 @@ module.exports = {
         if (token === 'null') {
             return res.status(401).send({ Error: 'No token provided.' })
         }
-        jwt.verify(token, config.secret, function (err, decoded) {
+        jwt.verify(token, config.secretkey, function (err, decoded) {
             console.log(decoded)
             if (err) return res.status(401).send({ Error: 'Token is invalid.' })
             if (decoded) next();
