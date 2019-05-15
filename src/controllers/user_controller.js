@@ -34,6 +34,7 @@ module.exports = {
 
     },
     create(req, res) {
+        if(req.body.PhoneNumber.length == 10){
         var hashedPassword = bcrypt.hashSync(req.body.Password, 10);
         var user = {
             UserId: req.body.UserId,
@@ -57,6 +58,9 @@ module.exports = {
                 res.send(result, 'User created', (200))
             }
         })
+    }else{
+        console.log('Je telefoonnummer is langer of korter dan 10 cijfers...')
+    }
     },
     edit(req, res) {
         var id = req.params.id
@@ -84,8 +88,18 @@ module.exports = {
         })
 
     },
-    delete() {
-
+    delete(req,res) {
+        var id = req.params.id
+        let sql = 'DELETE FROM user WHERE UserId= ' + id
+        db.query(sql, (err, result) => {
+            if (err) {
+                res.send(err)
+                console.log(err)
+            } else {
+                res.send(result, 'User deleted', (200))
+                console.log('>>User deleted')
+            }
+        })
     }
 
 }
