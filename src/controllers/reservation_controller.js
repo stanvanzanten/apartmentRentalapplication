@@ -43,7 +43,7 @@ module.exports = {
             Status: req.body.Status,
             UserId: req.body.UserId
         }
-        let sql = 'INSERT INTO reservation(ReservationId, Description, StreetAddress, Postalcode, City, UserId) VALUES ( "' + reservation.ReservationId + '", "' + reservation.Description + '", "' + reservation.StreetAddress + '", "' + reservation.Postalcode + '", "' + reservation.City + '", "' + reservation.UserId + '")'
+        let sql = 'INSERT INTO reservation(ReservationId, ApartmentId, StartDate, EndDate, Status, UserId) VALUES ( "' + reservation.ReservationId + '", "' + reservation.ApartmentId + '", "' + reservation.StartDate + '", "' + reservation.EndDate + '", "' + reservation.Status + '", "' + reservation.UserId + '")'
         db.query(sql, (err, result) => {
             if (err) {
                 if (err.errno === 1062) {
@@ -64,14 +64,14 @@ module.exports = {
     edit(req, res) {
         var reservation = {
             ReservationId: req.body.ReservationId,
-            Description: req.body.Description,
-            StreetAddress: req.body.StreetAddress,
-            Postalcode: req.body.Postalcode,
-            City: req.body.City,
+            ApartmentId: req.body.ApartmentId,
+            StartDate: req.body.StartDate,
+            EndDate: req.body.EndDate,
+            Status: req.body.Status,
             UserId: req.body.UserId
         }
 
-        let sql = 'UPDATE reservation SET ReservationId= "' + reservation.ReservationId + '", Description = "' + reservation.Description + '", StreetAddress = "' + reservation.StreetAddress + '", Postalcode = "' + reservation.Postalcode + '", UserId = "' + reservation.UserId + '" WHERE ReservationId = "' + reservation.ReservationId + '"'
+        let sql = 'UPDATE reservation SET ReservationId= "' + reservation.ReservationId + '", ApartmentId = "' + reservation.ApartmentId + '", StartDate = "' + reservation.StartDate + '", EndDate = "' + reservation.EndDate + '", UserId = "' + reservation.UserId + '" WHERE ReservationId = "' + reservation.ReservationId + '"'
         db.query(sql, (err, result) => {
             if (err) {
                 res.send(err)
