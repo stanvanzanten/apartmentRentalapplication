@@ -24,5 +24,8 @@
     "postal-codes-js": "^2.0.0",
     "sequelize": "^5.8.5",
     "supertest": "^4.0.2"
+  },
+    "engines" : { 
+      "node" : ">=8.0.0 <11.0.0" 
   }
 }
