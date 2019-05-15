@@ -71,7 +71,7 @@ module.exports = {
             UserId: req.body.UserId
         }
 
-        let sql = 'UPDATE reservation SET ReservationId= "' + reservation.ReservationId + '", ApartmentId = "' + reservation.ApartmentId + '", StartDate = "' + reservation.StartDate + '", EndDate = "' + reservation.EndDate + '", UserId = "' + reservation.UserId + '" WHERE ReservationId = "' + reservation.ReservationId + '"'
+        let sql = 'UPDATE reservation SET ReservationId= "' + reservation.ReservationId + '", ApartmentId = "' + reservation.ApartmentId + '", StartDate = "' + reservation.StartDate + '", EndDate = "' + reservation.EndDate + '", Status = "' + reservation.Status + '", UserId = "' + reservation.UserId + '" WHERE ReservationId = "' + reservation.ReservationId + '"'
         db.query(sql, (err, result) => {
             if (err) {
                 res.send(err)
