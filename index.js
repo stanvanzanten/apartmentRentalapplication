@@ -6,7 +6,7 @@ var sql = require("mysql")
 const appartmentRoutes = require('./routes/appartment_routes')
 const reservationRoutes = require('./routes/reservation_routes')
 const userRoutes = require('./routes/user_routes')
-const PORT = 3000;
+const PORT = 8080;
 //Create connection
 const db = sql.createConnection({
     host: 'coolsma.synology.me',
