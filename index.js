@@ -36,6 +36,10 @@ appartmentRoutes(app)
 reservationRoutes(app)
 userRoutes(app)
 
+app.get('/', function(req, res, next){
+    res.sendStatus(200);
+});
+
 server.listen(port, () => {
     console.log("App is running on port " + port);
 });
