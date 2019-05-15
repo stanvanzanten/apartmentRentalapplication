@@ -1,21 +1,35 @@
-const sql = require('mysql')
-const app = require('../index')
-const test_db = sql.createConnection({
-    host: 'localhost',
-    user: 'appartrent',
-    password: 'localbasepass',
-    database: 'rentalbase'
-});
+// const sql = require('mysql')
+// const app = require('../index')
+// //Create connection
+// const db = sql.createConnection({
+//     host: 'coolsma.synology.me',
+//     user: '2019-I14',
+//     password: '2019-I14',
+//     database: '2019-i14-appartementen'
+// });
 
-//Connect to the db
-test_db.connect((err) => {
-    if (err) {
-        console.log(err)
-    }
-    else {
-        console.log('MySql Connected on test db')
-        done()
-    }
-})
+// beforeEach((done) => {
+//     let usersdelete = 'DELETE FROM user'
+//     db.query(usersdelete, (err, result) => {
+//         if (err) throw err
+//         else {
 
-//Create connection
+//             let appartmentsdelete = 'DELETE FROM apartment'
+//             db.query(appartmentsdelete, (err, result) => {
+//                 if (err) throw err
+//                 else {
+
+//                     let reservationsdelete = 'DELETE FROM reservation'
+//                     db.query(reservationsdelete, (err, result) => {
+//                         if (err) throw err
+//                         else {
+
+//                             done()
+//                         }
+//                     })
+//                 }
+//             })
+
+//         }
+//     })
+// })
