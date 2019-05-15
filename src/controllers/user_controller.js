@@ -13,7 +13,7 @@ const db = sql.createConnection({
 
 module.exports = {
     list(req, res) {
-        let sql = 'SELECT * FROM DBUser'
+        let sql = 'SELECT * FROM user'
         db.query(sql, (err, result) => {
             if (err) throw (err)
             else {
@@ -23,7 +23,7 @@ module.exports = {
     },
     single(req, res) {
         var id = req.params.id
-        let sql = 'SELECT * FROM DBUser WHERE userid = ' + id
+        let sql = 'SELECT * FROM user WHERE userid = ' + id
         db.query(sql, (err, result) => {
             if (err) {
                 console.log(err)
@@ -34,18 +34,20 @@ module.exports = {
 
     },
     create(req, res) {
+        var hashedPassword = bcrypt.hashSync(req.body.Password, 10);
         var user = {
-            email: req.body.email,
-            password: req.body.password,
-            phonenumber: req.body.phonenumber,
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
-            city: req.body.city,
-            address: req.body.address,
-            postalcode: req.body.postalcode
-
+            UserId: req.body.UserId,
+            FirstName: req.body.FirstName,
+            LastName: req.body.Lastname,
+            StreetAddress: req.body.StreetAddress,
+            PostalCode: req.body.PostalCode,
+            City: req.body.City,
+            DataOfBirth: req.body.DataOfBirth,
+            PhoneNumber: req.body.PhoneNumber,
+            EmailAddress: req.body.EmailAddress,
+            Password: hashedPassword
         }
-        let sql = 'INSERT INTO DBUser(email, password, phonenumber, firstname, lastname, city, address, postalcode) VALUES ("' + user.email + '", "' + user.password + '", "' + user.phonenumber + '", "' + user.firstname + '", "' + user.lastname + '", "' + user.city + '", "' + user.address + '", "' + user.postalcode + '")'
+        let sql = 'INSERT INTO user(UserId, FirstName, LastName, StreetAddress, PostalCode, City, DataOfBirth, PhoneNumber, EmailAddress, Password) VALUES ("' + user.UserId + '", "' + user.FirstName + '", "' + user.Lastname + '", "' + user.StreetAddress + '", "' + user.PostalCode + '", "' + user.City + '", "' + user.DataOfBirth + '", "' + user.PhoneNumber + '", "' + user.EmailAddress + '", "' + user.Password + '")'
         db.query(sql, (err, result) => {
             if (err) {
                 res.send(err)
@@ -58,19 +60,20 @@ module.exports = {
     },
     edit(req, res) {
         var id = req.params.id
-
         var user = {
-            email: req.body.email,
-            password: req.body.password,
-            phonenumber: req.body.phonenumber,
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
-            city: req.body.city,
-            address: req.body.address,
-            postalcode: req.body.postalcode
+            UserId: req.body.UserId,
+            FirstName: req.body.FirstName,
+            LastName: req.body.Lastname,
+            StreetAddress: req.body.StreetAddress,
+            PostalCode: req.body.PostalCode,
+            City: req.body.City,
+            DataOfBirth: req.body.DataOfBirth,
+            PhoneNumber: req.body.PhoneNumber,
+            EmailAddress: req.body.EmailAddress,
+            Password: req.body.Password
 
         }
-        let sql = 'UPDATE DBUser SET email = "' + user.email + '", password = "' + user.password + '", phonenumber = "' + user.phonenumber + '", firstname = "' + user.firstname + '", lastname = "' + user.lastname + '", city = "' + user.city + '", address = "' + user.address + '", postalcode = "' + user.postalcode + '" WHERE userid=' + id
+        let sql = 'UPDATE user SET UserId = "' + user.UserId + '", FirstName = "' + user.FirstName + '", Lastname = "' + user.LastName + '", StreetAddress = "' + user.StreetAddress + '", PostalCode = "' + user.PostalCode + '", City = "' + user.City + '", DataOfBirth = "' + user.DataOfBirth + '", PhoneNumber = "' + user.PhoneNumber + '", EmailAddress = "' + user.EmailAddress + '", Password = "' + user.Password + '" WHERE UserId=' + user.UserId
         db.query(sql, (err, result) => {
             if (err) {
                 console.log(err)

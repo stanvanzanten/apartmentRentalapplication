@@ -4,19 +4,19 @@ const AuthController = require('../src/controllers/auth_controller')
 module.exports = (app) => {
 
       //register with 'email' and 'password'
-      app.post('/api/DBUser/register', UserController.create)
+      app.post('/api/user/register', UserController.create)
       //login with 'email' and 'password'
-      app.post('/api/DBUser/login', AuthController.login)
+      app.post('/api/user/login', AuthController.login)
 
       //get a list of all users
-      app.get('/api/DBUser', UserController.list)
+      app.get('/api/user', UserController.list)
       //get the data of a single user
-      app.get('/api/DBUser/:id', UserController.single)
+      app.get('/api/user/:id', UserController.single)
 
       //edit an existing user while logged in
-      app.put('/api/DBUser/:id', UserController.edit)
+      app.put('/api/user/:id', UserController.edit)
       //delete an existing user while logged in
-      app.delete('/api/DBUser/:id', AuthController.validateToken, UserController.delete)
+      app.delete('/api/user/:id', AuthController.validateToken, UserController.delete)
 }
 
 // AuthController.validateToken,
