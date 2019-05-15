@@ -1,2 +1,5 @@
 # Build and Release Folders
 node_modules
+npm-debug.log
+.DS_Store
+/*.env
