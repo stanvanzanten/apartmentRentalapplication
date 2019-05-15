@@ -3,6 +3,12 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const config = require('../../config/auth_config');
 const sql = require('mysql')
+const express = require('express')
+const router = express.Router()
+const bodyParser = require('body-parser');
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.json());
+const moment = require('moment')
 //Create connection
 const db = sql.createConnection({
     host: 'coolsma.synology.me',
@@ -13,15 +19,16 @@ const db = sql.createConnection({
 module.exports = {
     login(req, res) {
         let user = {
-            email: req.body.email,
-            password: req.body.password
+            EmailAddress: req.body.EmailAddress,
+            Password: req.body.Password
         }
-        let sql = 'SELECT * FROM DBUser WHERE email = "' + user.email + '"'
+        let sql = 'SELECT * FROM user WHERE EmailAddress = "' + user.EmailAddress + '"'
         db.query(sql, (err, result) => {
             if (err) {
                 console.log(err)
             } else {
-                var passwordisValid = bcrypt.compareSync(req.body.password, user.password)
+                var passwordisValid = bcrypt.compareSync(req.body.Password, result[0].Password)
+                console.log('body pass: ' + req.body.Password + ' || user pass: ' + result[0].Password)
                 if (passwordisValid) {
 
                     var token = jwt.sign({ id: result.userid }, config.secretkey, {
@@ -29,6 +36,7 @@ module.exports = {
                     })
                     res.send('Logged in', { auth: true, token: token }, (200))
                     console.log('User logged in')
+                    console.log(token)
                 }
                 if (!passwordisValid) {
                     res.send('Password does not match', (401))

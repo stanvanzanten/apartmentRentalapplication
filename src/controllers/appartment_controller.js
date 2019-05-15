@@ -1,6 +1,7 @@
 //imports
 //here
 const sql = require('mysql')
+var postalCodes = require('postal-codes-js');
 //Create connection
 const db = sql.createConnection({
     host: 'coolsma.synology.me',
@@ -43,6 +44,7 @@ module.exports = {
             City: req.body.City,
             UserId: req.body.UserId
         }
+        if(postalCodes.validate('nl',req.body.Postalcode) == true){
         let sql = 'INSERT INTO apartment(ApartmentId, Description, StreetAddress, Postalcode, City, UserId) VALUES ( "' + appartment.ApartmentId + '", "' + appartment.Description + '", "' + appartment.StreetAddress + '", "' + appartment.Postalcode + '", "' + appartment.City + '", "' + appartment.UserId + '")'
         db.query(sql, (err, result) => {
             if (err) {
@@ -60,6 +62,10 @@ module.exports = {
                 console.log('>>Appartment created')
             }
         })
+    } else{
+        res.send('Je postcode klopt niet helemaal vriend', (401))
+        console.log('Je postcode klopt niet helemaal vriend')
+    }
     },
     edit(req, res) {
         var appartment = {
