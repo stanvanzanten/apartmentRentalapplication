@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const config = require('../../config/auth_config');
 const sql = require('mysql')
+var validator = require("email-validator");
 //Create connection
 const db = sql.createConnection({
     host: 'coolsma.synology.me',
@@ -35,6 +36,7 @@ module.exports = {
     },
     create(req, res) {
         if(req.body.PhoneNumber.length == 10){
+            if(validator.validate(req.body.EmailAddress) == true){
         var hashedPassword = bcrypt.hashSync(req.body.Password, 10);
         var user = {
             UserId: req.body.UserId,
@@ -59,7 +61,12 @@ module.exports = {
             }
         })
     }else{
-        console.log('Je telefoonnummer is langer of korter dan 10 cijfers...')
+        console.log('Je e-mail voldoet niet aan de email eisen..')
+        res.send('E-mail adres voldoet niet aan de gestelde email eisen.', (401))
+    }
+    }else{
+        console.log('Je telefoonnummer is langer of korter dan 10 cijfers..')
+        res.send('Je telefoonnummer is langer of korter dan 10 cijfers..', (401))
     }
     },
     edit(req, res) {
