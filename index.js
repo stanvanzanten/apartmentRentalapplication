@@ -7,6 +7,8 @@ const appartmentRoutes = require('./routes/appartment_routes')
 const reservationRoutes = require('./routes/reservation_routes')
 const userRoutes = require('./routes/user_routes')
 const PORT = 3000;
+const port = process.env.PORT || 8000;
+
 //Create connection
 const db = sql.createConnection({
     host: 'coolsma.synology.me',
@@ -27,16 +29,21 @@ db.connect((err) => {
 
 //Set app variable
 var app = express();
+let server = require('http').Server(app);
 
 //Body parser middleware
 app.use(bodyParser.json()); 
+
+app.get('/', function(req, res, next){
+    res.sendStatus(200);
+});
 
 appartmentRoutes(app)
 reservationRoutes(app)
 userRoutes(app)
 
-app.listen(PORT, () => {
-    console.log('Server running on localhost: ' + PORT)
-})
+server.listen(port, () => {
+    console.log("App is running on port " + port);
+});
 
 module.exports = app
